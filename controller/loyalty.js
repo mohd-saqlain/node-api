@@ -232,7 +232,7 @@ const getCouponDetails = async (req,res) => {
                 message:"Customer doesn't exists"
             }
         }
-        res.status(400).json(jsonResponse)
+        res.json(jsonResponse)
     }
     }catch(err){
         res.status(500).json({message:"Internal server error"})
@@ -244,13 +244,31 @@ const redeemCoupon = async (req,res) => {
     try{
         const userExists = await Customer.findOne({mobile:customer_mobile})
         if(!userExists){
-            return res.status(400).json({message:"User doesn't exists"})
+            const jsonResponse = {
+                status_code:400,
+                response:{
+                    message:"Customer doesn't exists"
+                }
+            }
+            return res.json(jsonResponse)
         }
         const redeemedCoupon = await Coupon.findOneAndRemove({customer_mobile,"coupon.coupon_code":coupon_code})
         if(!redeemedCoupon){
-            return res.status(400).json({message:"Invalid coupon code"})
+            const jsonResponse = {
+                status_code:400,
+                response:{
+                    message:"Invalid coupon code."
+                }
+            }
+            return res.json(jsonResponse)
         }
-       res.status(200).json({message:"Coupon successfully redeemed."})
+        const jsonResponse = {
+            status_code:200,
+            response:{
+                message:"Coupon successfully redeemed."
+            }
+        }
+       res.json(jsonResponse)
     }catch(err){
         console.log(err)
         res.status(500).json({message:"Internal server error"})
