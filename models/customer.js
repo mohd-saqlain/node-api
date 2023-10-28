@@ -29,6 +29,16 @@ const customerSchema = new mongoose.Schema({
         type:Number,
         default:0,
     },
+    coupons: [
+        {
+          coupon_name: {
+            type: String,
+          },
+          coupon_code: {
+            type: String,
+          },
+        },
+      ]
 })
 
 const Customer = mongoose.model('customer',customerSchema)
