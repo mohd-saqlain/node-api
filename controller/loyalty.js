@@ -224,6 +224,7 @@ const getPOSBillDetails = async (req, res) => {
 
 const getCouponDetails = async (req, res) => {
   const { coupon_code, customer_mobile } = req.body;
+  console.log(req.body);
   try {
     const userExists = await Customer.findOne({ mobile: customer_mobile });
     if (userExists) {
@@ -237,7 +238,12 @@ const getCouponDetails = async (req, res) => {
         const jsonResponse = {
           status_code: 200,
           response: {
-            coupon,
+            coupon_name: coupon.coupon_name,
+            coupon_code: coupon.coupon_code,
+            discount_on:"bill",     
+            discount_type:"fixed", 
+            discount_value:10,      
+            comment:"10 % discount on bill applied"
           },
         };
         res.json(jsonResponse);
