@@ -240,10 +240,10 @@ const getCouponDetails = async (req, res) => {
           response: {
             coupon_name: coupon.coupon_name,
             coupon_code: coupon.coupon_code,
-            discount_on:"bill",     
-            discount_type:"fixed", 
-            discount_value:10,      
-            comment:"10 % discount on bill applied"
+            discount_type: "offer",
+            offer_name: "50%OFF",
+            special_offer: false,
+            authentication: false,
           },
         };
         res.json(jsonResponse);
