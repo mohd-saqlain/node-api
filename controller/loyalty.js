@@ -7,13 +7,13 @@ const getCustomerDetails = async (req, res) => {
   try {
     const customerExist = await Customer.findOne({ mobile: customer_mobile });
     if (customerExist) {
-      // const customerCoupons = await Coupon.find({ customer_mobile });
-      // const coupons = customerCoupons.map(({ coupon }) => ({
-      //   coupon_name: coupon.coupon_name,
-      //   coupon_code: coupon.coupon_code,
-      // }));
+      const customerCoupons = await Coupon.find({ customer_mobile });
+      const coupons = customerCoupons.map(({ coupon }) => ({
+        coupon_name: coupon.coupon_name,
+        coupon_code: coupon.coupon_code,
+      }));
       // console.log(coupons)
-      const { loyalty_points , coupons } = customerExist;
+      const { loyalty_points } = customerExist;
       const jsonResponse = {
         status_code: 200,
         response: {
@@ -59,13 +59,7 @@ const createCustomer = async (req, res) => {
         dob,
         merchant_id,
         customer_key,
-        loyalty_points: 100,
-        coupons: [
-            {
-              coupon_name: "10%OFF",
-              coupon_code: "10OFF"
-            }
-          ]
+        loyalty_points: 100
       });
       const customerRegister = await customer.save();
 
@@ -277,7 +271,7 @@ const redeemCoupon = async (req, res) => {
     if (!userExists) {
       return res.status(400).json({ message: "User doesn't exists" });
     }
-    const redeemedCoupon = await Coupon.findOneAndRemove({
+    const redeemedCoupon = await Coupon.findOne({
       customer_mobile,
       "coupon.coupon_code": coupon_code,
     });
@@ -299,7 +293,17 @@ const addCoupon = async (req, res) => {
     if (!userExists) {
       return res.status(400).json({ message: "User doesn't exists" });
     }
-    const coupons = new Coupon({ customer_mobile, coupon });
+    const coupons = new Coupon({
+      customer_mobile,
+      coupon: {
+        coupon_name: "75OFF",
+        coupon_code: "75OFF",
+        discount_on:"bill",     
+        discount_type:"fixed",
+        discount_value:75,      
+        comment:"75 discount on bill applied"
+      },
+    });
     const createdCoupon = await coupons.save();
     if (createdCoupon) {
       res.status(200).json({ message: "Coupon successfully added" });
