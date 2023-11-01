@@ -231,14 +231,10 @@ const getCouponDetails = async (req, res) => {
         const { coupon } = matchedCoupon;
         const jsonResponse = {
           status_code: 200,
-          response: {
-            coupon_name: coupon.coupon_name,
-            coupon_code: coupon.coupon_code,
-            discount_type: "offer",
-            offer_name: "50%OFF",
-            special_offer: false,
-            authentication: false,
-          },
+          response: 
+            coupon
+           
+          
         };
         res.json(jsonResponse);
       } else {
