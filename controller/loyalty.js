@@ -8,19 +8,25 @@ const getCustomerDetails = async (req, res) => {
     const customerExist = await Customer.findOne({ mobile: customer_mobile });
     if (customerExist) {
       const customerCoupons = await Coupon.find({ customer_mobile });
-      // const coupons = customerCoupons.map(({ coupon }) => ({
-      //   coupon_name: coupon.coupon_name,
-      //   coupon_code: coupon.coupon_code,
-      //   discount_on: coupon.discount_on,
+      const coupons = customerCoupons.map(({ coupon }) => ({
+        coupon_name: coupon.coupon_name,
+        coupon_code: coupon.coupon_code,
+        discount_on: coupon.discount_on,
+        discount_type: coupon.discount_type,
+        discount_value: coupon.discount_value,
+        comment: coupon.comment,
+        special_offer: coupon.special_offer,
+        authentication: coupon.authentication,
 
-      // }));
+
+      }));
       // console.log(coupons)
       const { loyalty_points } = customerExist;
       const jsonResponse = {
         status_code: 200,
         response: {
           loyalty_points,
-          coupons: customerCoupons,
+          coupons
         },
       };
       res.json(jsonResponse);
