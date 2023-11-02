@@ -274,7 +274,12 @@ const redeemCoupon = async (req, res) => {
     if (!redeemedCoupon) {
       return res.status(400).json({ message: "Invalid coupon code" });
     }
-    res.status(200).json({ message: "Coupon successfully redeemed." });
+    res.status(200).json({ 
+      status_code: 200,
+      "response": {
+        "message":"Coupon successfully redeemed."
+      }
+     } );
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Internal server error" });
