@@ -17,6 +17,7 @@ const getCustomerDetails = async (req, res) => {
         comment: coupon.comment,
         special_offer: coupon.special_offer,
         authentication: coupon.authentication,
+        offer_name: coupon.offer_name,
 
 
       }));
